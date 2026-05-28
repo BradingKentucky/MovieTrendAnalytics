@@ -9,7 +9,7 @@ from pandas.core.methods.describe import select_describe_func
 class UnderTheHood:
 
     def __init__(self,data):
-        self.data = pandas.read_csv(data)
+        self.data = data
 
     def genretotalcounter(self):
         Genres = ["Action", "Comedy", "Documentary", "Drama", "Horror", "Romance", "Sci-Fi", "Thriller"]
@@ -47,18 +47,18 @@ class UnderTheHood:
 
 
     def genreaverage(self):
-        # gets total amount of items
+        # gets the total
         total = len(self.data)
+        # gets total generes
         series = self.genretotalcounter()
-        averages = []
-        # gets % average for all movies
-        for newitem in series.index:
-            averages.append(newitem/total)
+        #divides to get % and returns that as a dict
+        return (series / total).to_dict()
 
         # turns it into panda series and sorts it from least->most genre%
         return pandas.Series(series.values, index=averages).sort_index()
 
     def sortbylessthan(self, budget):
+        self.data.columns = self.data.columns.str.strip()
         mask = pandas.to_numeric(self.data["BudgetUSD"], errors="coerce").le(budget)
         return self.data[mask].reset_index(drop=True)
 
@@ -71,9 +71,17 @@ class UnderTheHood:
         #df[mask] selects rows of self.data where mask is true.
         # reset_index returns the cleaned filtered data
         return df[mask].reset_index(drop=True)
-# todo: why... not work?
+
     def sortbyyears(self,startyear,endyear):
-        masked = pandas.to_numeric(self.data["ReleaseDate"], errors="coerce").le(startyear)
-        return self.data[masked].reset_index(drop=True)
+        #gets the data from the self.data and males ReleaseYear the searcahble thing
+        masked = pandas.to_numeric(self.data["ReleaseYear"], errors="coerce")
+        #filters by greater than or equal to and vice versa
+        masked2 = masked.ge(startyear) & masked.le(endyear)
+        #returns it all
+        return self.data[masked2].reset_index(drop=True)
+
+    def sortbyyearsandgenre(self,startyear,endyear,genre):
+        step1=self.sortbyyears(startyear,endyear)
+
 
 #doesn't work so fix sortbylessthan

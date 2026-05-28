@@ -11,7 +11,9 @@ A personal project where I'll use data science and programming to discover genre
 ## Completed parts of plan
 1. Find source for data
    I have decided to use [Kaggle's dataset of movie](https://www.kaggle.com/datasets/mjshubham21/movie-dataset-for-analytics-and-visualization?resource=download), as it has adequate movie data for it and is the easiest to use without sacfricing data accuracy
-
+2. coded in python, does exactly what is requested
+3. see above
+   1. I think some front end would be nice. Just a nice visualizer.
 ### 5/12/26
    not much today tbh. downloaded the data set, tested it out a bit, and yeah. now I gotta learn panda but it should be fun
    
@@ -24,3 +26,7 @@ A personal project where I'll use data science and programming to discover genre
    simplifed the code. UndertheHood now takes one data object and all classes intereact with that single instance. Added average finder
 ### 5/20/26
    Found out a better way to do alot of things. Alot of code rewritten.
+### 5/26/26
+   Got pretty much everything I want from it: shows genre popularity when given anything less than a certain budget.
+### 5/27/26
+   Added piechart for visulazation purposes
