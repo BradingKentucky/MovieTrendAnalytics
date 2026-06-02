@@ -24,7 +24,7 @@ if __name__ == '__main__':
 #following genres in the dataset: Action, Comedy, Documentary, Drama, Horror, Romance, Sci-Fi, Thriller
 
 # prints data
-    newfile = pandas.read_csv("Test.csv")
+    newfile = pandas.read_csv("movies_dataset.csv")
     Testdata = UndertheHood.UnderTheHood(newfile)
    # Testdata = UndertheHood.UnderTheHood("movies_Dataset.csv")
 
