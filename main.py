@@ -1,4 +1,5 @@
 # This is a sample Python script.
+from _pyrepl.commands import end
 from functools import total_ordering
 from random import choice
 from tkinter import Scale
@@ -37,87 +38,100 @@ if __name__ == '__main__':
 
 
     def choices():
-        print(f"what do you wanna do?")
-        print(f"1: total genre count")
-        print(f"2: average")
-        print(f"3: films with less than budget")
-        print(f"4: a gener with less than budget. Compared to all in that genre")
-        print(f"5:all films made between two years")
-        print(f"6: See what genres were popualar between two years")
-        print(f"7: See what genres were popualar between two years given that it be under a certain budget")
-        choice = input("Choose option")
-        if choice == "1":
-            print("total genre count")
-            GenreDict = Testdata.genretotalcounter()
-            print(GenreDict)
-        elif choice == "2":
-            print("now should get the average")
-            print(Testdata.genreaverage())
-        elif choice == "3":
-            years = input("Years?")
-            print(f"all films with budget less than {years}")
-            print(Testdata.sortbylessthan(years))
-        elif choice == "4":
-            print(f"Action:1, Comedy:2, Documentary:3, Drama:4, Horror:5, Romance:6")
-            choice2 = input("genre choice?")
-            valid = True
-            while valid:
-                if choice2 == "1":
-                    genre = "Action"
-                    valid = False
-                elif choice2 == "2":
-                    genre = "Comedy"
-                    valid = False
-                elif choice2 == "3":
-                    genre = "Documentary"
-                    valid = False
-                elif choice2 == "4":
-                    genre = "Drama"
-                    valid = False
-                elif choice2 == "5":
-                    genre = "Horror"
-                    valid = False
-                elif choice2 == "6":
-                    genre ="Romance"
-                    valid = False
-                else:
-                    choice2 = input("choose valid genre")
+        leave = True
+        while leave:
+            print(f"what do you wanna do?")
+            print(f"1: total genre count")
+            print(f"2: average")
+            print(f"3: films with less than budget")
+            print(f"4: a gener with less than budget. Compared to all in that genre")
+            print(f"5:all films made between two years")
+            print(f"6: See what genres were popualar between two years")
+            print(f"7: See what genres were popualar between two years given that it be under a certain budget")
+            print(f"0: Exit")
+            choice = input("Choose option")
+            if choice == "1":
+                print("total genre count")
+                GenreDict = Testdata.genretotalcounter()
+                print(GenreDict)
+            elif choice == "2":
+                print("now should get the average")
+                print(Testdata.genreaverage())
+            elif choice == "3":
+                years = input("max budget?")
+                print(f"all films with budget less than {years}")
+                print(Testdata.sortbylessthan(int(years)))
+            elif choice == "4":
+                print(f"Action:1, Comedy:2, Documentary:3, Drama:4, Horror:5, Romance:6")
+                choice2 = input("genre choice?")
+                valid = True
+                while valid:
+                    if choice2 == "1":
+                        genre = "Action"
+                        valid = False
+                    elif choice2 == "2":
+                        genre = "Comedy"
+                        valid = False
+                    elif choice2 == "3":
+                        genre = "Documentary"
+                        valid = False
+                    elif choice2 == "4":
+                        genre = "Drama"
+                        valid = False
+                    elif choice2 == "5":
+                        genre = "Horror"
+                        valid = False
+                    elif choice2 == "6":
+                        genre ="Romance"
+                        valid = False
+                    else:
+                        choice2 = input("choose valid genre")
 
-            budget = input("budget")
+                budget = input("budget")
 
-            print("All comedy films made with less than 1,500,000")
-            catalog1=Testdata.sortbylessthanandgenre(budget,genre)
-            print(catalog1)
-            print("Compared to total comedy movies...")
-            collection3 = Testdata.genretotalcounter()
-            # convert the series into a dict, then get the %
-            newdict = collection3.to_dict()
-            percent1 = len(catalog1)/newdict["Comedy"]
-            print(f"there is a total of {newdict["Comedy"]} Comedies. Meaning out of all of them, only {percent1} were made with a budget of less than 1,500,000")
-        elif choice == "5":
-            print("all films made between 1975-1989")
-            print(Testdata.sortbyyears(1975,1989))
-        elif choice == "6":
-            startyear = input("Start year?")
-            endyear = input("End year?")
-            print(f"film genre average between {startyear} and {endyear}")
-            twok = Testdata.sortbyyears(int(startyear),int(endyear))
-            newdataset = UndertheHood.UnderTheHood(twok)
+                print(f"All comedy films made with less than ${budget}")
+                catalog1=Testdata.sortbylessthanandgenre(int(budget),genre)
+                print(catalog1)
+                print("Compared to total comedy movies...")
+                collection3 = Testdata.genretotalcounter()
+                # convert the series into a dict, then get the %
+                newdict = collection3.to_dict()
+                percent1 = len(catalog1)/newdict["Comedy"]
+                print(f"there is a total of {newdict["Comedy"]} Comedies. Meaning out of all of them, only {percent1} were made with a budget of less than 1,500,000")
+            elif choice == "5":
+                startyear =int(input("start year?"))
+                endyear = int(input("end year?"))
+                print(f"all films made between {startyear}-{endyear}")
+                print(Testdata.sortbyyears(startyear,endyear))
+            elif choice == "6":
+                startyear = int(input("Start year?"))
+                endyear = int(input("End year?"))
+                print(f"film genre average between {startyear} and {endyear}")
+                twok = Testdata.sortbyyears(int(startyear),int(endyear))
+                newdataset = UndertheHood.UnderTheHood(twok)
+                newestset = pandas.Series(newdataset.genreaverage())
+                newestset.plot(kind='pie',autopct='%1.1f%%')
+                plt.title(f"Genre average from {startyear} to {endyear}")
+                plt.show()
 
-        elif choice == "7":
-            startyear = input("Start year?")
-            endyear = input("End year?")
-            budget = int(input("Budget?"))
-            newset = Testdata.sortbyyears(int(startyear),int(endyear))
-            datapt1 = UndertheHood.UnderTheHood(newset)
-            genrecount = datapt1.sortbylessthan(budget)
-            datapt67 = UndertheHood.UnderTheHood(genrecount)
-            average = pandas.Series(datapt67.genreaverage())
-            average.plot(kind='pie',autopct='%1.1f%%')
-            plt.title(f"Genre average from {startyear} to {endyear} under {budget}")
-            plt.show()
-        else:
-            choices()
+            elif choice == "7":
+                startyear = input("Start year?")
+                endyear = input("End year?")
+                budget = int(input("Budget?"))
+                newset = Testdata.sortbyyears(int(startyear),int(endyear))
+                datapt1 = UndertheHood.UnderTheHood(newset)
+                genrecount = datapt1.sortbylessthan(budget)
+                datapt67 = UndertheHood.UnderTheHood(genrecount)
+                average = pandas.Series(datapt67.genreaverage())
+                average.plot(kind='pie',autopct='%1.1f%%')
+                plt.title(f"Genre average from {startyear} to {endyear} under {budget}")
+                plt.show()
+
+            elif choice == "0":
+                leave = False
+                break
+            else:
+                choices()
 
     choices()
 
