@@ -30,3 +30,5 @@ A personal project where I'll use data science and programming to discover genre
    Got pretty much everything I want from it: shows genre popularity when given anything less than a certain budget.
 ### 5/27/26
    Added piechart for visulazation purposes
+### 6/02/26
+   should now be good for anyone to use
