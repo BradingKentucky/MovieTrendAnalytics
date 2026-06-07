@@ -12,38 +12,16 @@ class UnderTheHood:
         self.data = data
 
     def genretotalcounter(self):
-        Genres = ["Action", "Comedy", "Documentary", "Drama", "Horror", "Romance", "Sci-Fi", "Thriller"]
-        Aca = 0
-        Coa = 0
-        Doa = 0
-        Dra = 0
-        Hoa = 0
-        Roa = 0
-        Sca = 0
-        Tha = 0
+        Genres = {'Action': 0, 'Comedy': 0, 'Documentary': 0, 'Drama': 0, 'Horror': 0, 'Romance': 0, 'Sci-Fi': 0, 'Thriller': 0}
 
-        # todo: find better way to write above
+        # done: find better way to write above
         for item in self.data["Genre"]:
-            if item == "Action":
-                Aca = Aca + 1
-            if item == "Comedy":
-                Coa = Coa + 1
-            if item == "Documentary":
-                Doa = Doa + 1
-            if item == "Drama":
-                Dra = Dra + 1
-            if item == "Horror":
-                Hoa = Hoa + 1
-            if item == "Romance":
-                Roa = Roa + 1
-            if item == "Sci-Fi":
-                Sca = Sca + 1
-            if item == "Thriller":
-                Tha = Tha + 1
-        Total = [Aca, Coa, Doa, Dra, Hoa, Roa, Sca, Tha]
+            for genre in Genres:
+                if item == genre:
+                    Genres[item] += 1
 
         #makes a panda series, think of it as a dict but better
-        return pandas.Series(Total, index=Genres)
+        return pandas.Series(Genres, index=Genres)
 
 
     def genreaverage(self):
@@ -52,6 +30,11 @@ class UnderTheHood:
         # gets total generes
         series = self.genretotalcounter()
         #divides to get % and returns that as a dict
+
+        # possible error here? maybe it doesn't divied each genere count by the total series?
+        # but instead divided the entire genre count by total films?
+        # fix would be for loop for each genre
+        # no it does it right
         return (series / total).to_dict()
 
         # turns it into panda series and sorts it from least->most genre%
@@ -74,6 +57,8 @@ class UnderTheHood:
 
     def sortbyyears(self,startyear,endyear):
         #gets the data from the self.data and males ReleaseYear the searcahble thing
+
+        # do know that this turned it into a single collumn as well, which lets the next line of code work
         masked = pandas.to_numeric(self.data["ReleaseYear"], errors="coerce")
         #filters by greater than or equal to and vice versa
         masked2 = masked.ge(startyear) & masked.le(endyear)
@@ -83,5 +68,37 @@ class UnderTheHood:
     def sortbyyearsandgenre(self,startyear,endyear,genre):
         step1=self.sortbyyears(startyear,endyear)
 
+    def sortbyyearsandmoney(self, startyear, endyear, budget,TrueforBelow):
+        # this keeps the whole dataset intact (unlike other one).
+        newdata = self.data[(self.data['ReleaseYear'] >= startyear) & (self.data['ReleaseYear'] <= endyear)]
 
+        # Filter by budget and sort
+        if TrueforBelow:
+            newdata = newdata[newdata['BudgetUSD'] <= budget]
+            newdata = newdata.sort_values(by=['BudgetUSD'], ascending=False)
+            # then get genre count so you only get the genre count, makes data cleaner.
+
+        elif not TrueforBelow:
+            newdata = newdata[newdata['BudgetUSD'] > budget]
+            newdata = newdata.sort_values(by=['BudgetUSD'], ascending=False)
+        return newdata
+
+
+        #newset = self.sortbyyears(int(startyear), int(endyear))
+        #datapt1 = UndertheHood.UnderTheHood(newset)
+        #return(self.sortbylessthan(budget))
+        #datapt67 = UndertheHood.UnderTheHood(genrecount)
 #doesn't work so fix sortbylessthan
+    # keep rows where Worldwide (or whichever revenue column) >= timesbudget * BudgetUSD
+    def sortbyearnings(self, timesbudget):
+        profited = []
+        for idx, row in self.data.iterrows():  # row is a Series
+            product = pandas.to_numeric(row['BudgetUSD']) * timesbudget
+            # do something with product, e.g. save
+            if pandas.to_numeric(row['Global_BoxOfficeUSD']) >= pandas.to_numeric(product):
+                profited.append(idx)
+                # use idx not row. idx is entire row, while row is just "row 1" and doesn't include all
+                # the data that you'd need
+
+        return self.data.loc[profited]
+

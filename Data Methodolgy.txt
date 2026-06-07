@@ -1,0 +1,17 @@
+Goal is to see if there are any major differnces in genre production (and consumer conusumption) between major and indie films
+
+indie films are any film made with less than $1,000,000
+big indie films are any films made between $1,000,000 and $5,000,000
+major films are films made above that
+
+in the anaylsis I will first anaylize all indie films (made less than 5 million) and compare them to films made with more than 5 million
+Then I'll do a deeper anaylsis
+
+results:
+    indie films have seen no major change in genre popualirty for production. However, for genres that have been successfull...
+    that is being worked on
+
+    major productions also have no major change in genre popualirty.
+
+    Ok so pretty dissapointing results. People have always been intrested in making those genres by their respective % points. But now lets see what the consumer wanted to see amd how that changed over the years.
+    About the same.

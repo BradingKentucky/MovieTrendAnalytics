@@ -33,4 +33,22 @@ If you are using, be sure to extract the dataset from the zip file. then run mai
 ### 5/27/26
    Added piechart for visulazation purposes
 ### 6/02/26
-   should now be good for anyone to use
+   should now be good for anyone to use. Realized that gotta make it sort by income above certain threshold so that indie films aren't included in the major films
+   prooveing a bit more diffuclt than what i once though. Trying to do a area graph to make it easier to see the progression and decline. but keeps not showing incorrect output
+   did some bug testing, and maybe there isn't any substianl genre trends at all? at least in terms of what is being made in the indie genre
+   will test it with how much money each genre made over the decades. I looked at other data sets and I believe something is worng in mine with how i counted the data. the genreaverage() could be the culprit
+### 6/03/26   
+   after some research and quick math, I've come to the conclsion that the data output is right. Which is intresting, because it shows no major genre intrest change
+   refineded the over decades genre trends. Started work on revune earned by genres too.
+### 6/04/26
+   Had to do alot of googling and research to figure out how sort genres by earnings. Eairler worked fine since was just one collumn, now however things are a bit different
+   but i got it working. IS very slow, and I need to find a faster and better way to do it, but for now it gets job done.
+   I can use the new function to get movies from a decade and see what sold well back then too.
+### 6/06/26
+   Simplifed genre counter
+   Worked on way to see genre consumer popualirty. Still, something doesn't seem right. Results show no major changes at all.
+   thinking about switching to another dataset, maybe TMDB? Results are baffaling, and upon looking at documentary movies it should show that they rise in popualiryty entering the 2000s.
+   Most of the code is built off the CSV, so if I were to move to TMDB I'd have to use the API to convert the data into a CSV
+   which is pretty unlikely ngl. So I'd have to rewrite the code.
+   but what other choice do I have? 
+   I'll change my dataset to TMDB once I am for certain that all my code works for this current dataset. As in, does everything I'd want it to do for the other as well.

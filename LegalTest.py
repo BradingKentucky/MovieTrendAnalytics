@@ -43,6 +43,10 @@ class MyTestCase(unittest.TestCase):
         """Make sure that year classifcation works"""
         years = self.Testdata.sortbyyears(1975,1989)
         self.assertEqual(len(years), 2)
+    def test_income_req(self):
+        """Make sure that income requirements work"""
+        self.assertEqual(len(self.Testdata.sortbyearnings(2)),6)
+
 
 if __name__ == '__main__':
     unittest.main()
