@@ -52,3 +52,8 @@ If you are using, be sure to extract the dataset from the zip file. then run mai
    which is pretty unlikely ngl. So I'd have to rewrite the code.
    but what other choice do I have? 
    I'll change my dataset to TMDB once I am for certain that all my code works for this current dataset. As in, does everything I'd want it to do for the other as well.
+### 6/08/26
+   Started working on the TMDB API, first time using any API but so far I got it to give me a list of all genres. Now just need it to extract the list of all movies...
+   Gonna use a Go file for the API since it is the fastest and I need speed for this. Esepcailly considering the amount of data. Will only use the API once, but the genre i still would like to directly plug intp python as best as i can
+### 6/09/26
+   TMDB doesn't have documenation for extracting just budget but am working through it
