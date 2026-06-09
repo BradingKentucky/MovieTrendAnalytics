@@ -20,13 +20,19 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    import pandas, UndertheHood, matplotlib.pyplot as plt
+    import pandas, UndertheHood, matplotlib.pyplot as plt, subprocess as tmdb, json
 
-#following genres in the dataset: Action, Comedy, Documentary, Drama, Horror, Romance, Sci-Fi, Thriller
-
+#following genres in the base dataset: Action, Comedy, Documentary, Drama, Horror, Romance, Sci-Fi, Thriller
+# in the tmdb, it is different. subproccess allows me to access that, self-explanatory
+    GOoutput = tmdb.run(['go', 'run', 'TMDB_API.go'], capture_output=True, text=True,shell=True)
+    # loads the outputted json string into Genres dict
+    Genres = json.loads(GOoutput.stdout)
+    # turns dict into list, every name (action) in the genres (whole dict) output
+    Genres=[Genre['name'] for Genre in Genres['genres']]
+    #print(Genres)
 # prints data
     newfile = pandas.read_csv("movies_dataset.csv")
-    Testdata = UndertheHood.UnderTheHood(newfile)
+    Testdata = UndertheHood.UnderTheHood(newfile,Genres)
    # Testdata = UndertheHood.UnderTheHood("movies_Dataset.csv")
 
 
@@ -96,7 +102,7 @@ if __name__ == '__main__':
             print(f"9: view what was proffitable over the years for films under $5mill, only counting films that made 2.5* their budget")
             print(f"10: view generes from 1950-2026 that made X times their budget")
             print(f"0: Exit")
-            choice ="10"
+            input(choice)
             if choice == "1":
                 print("total genre count")
                 GenreDict = Testdata.genretotalcounter()
@@ -155,7 +161,7 @@ if __name__ == '__main__':
                 endyear = int(input("End year?"))
                 print(f"film genre average between {startyear} and {endyear}")
                 twok = Testdata.sortbyyears(int(startyear),int(endyear))
-                newdataset = UndertheHood.UnderTheHood(twok)
+                newdataset = UndertheHood.UnderTheHood(twok,Genres)
                 newestset = pandas.Series(newdataset.genreaverage())
                 newestset.plot(kind='pie',autopct='%1.1f%%')
                 plt.title(f"Genre average from {startyear} to {endyear}")
@@ -166,9 +172,9 @@ if __name__ == '__main__':
                 endyear = input("End year?")
                 budget = int(input("Budget?"))
                 newset = Testdata.sortbyyears(int(startyear),int(endyear))
-                datapt1 = UndertheHood.UnderTheHood(newset)
+                datapt1 = UndertheHood.UnderTheHood(newset,Genres)
                 genrecount = datapt1.sortbylessthan(budget)
-                datapt67 = UndertheHood.UnderTheHood(genrecount)
+                datapt67 = UndertheHood.UnderTheHood(genrecount,Genres)
                 average = pandas.Series(datapt67.genreaverage())
                 average.plot(kind='pie',autopct='%1.1f%%')
                 plt.title(f"Genre average from {startyear} to {endyear} under {budget}")

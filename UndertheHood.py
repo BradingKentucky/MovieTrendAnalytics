@@ -8,20 +8,20 @@ from pandas.core.methods.describe import select_describe_func
 
 class UnderTheHood:
 
-    def __init__(self,data):
+    def __init__(self,data,Genres):
         self.data = data
+        self.Genres = Genres
 
     def genretotalcounter(self):
-        Genres = {'Action': 0, 'Comedy': 0, 'Documentary': 0, 'Drama': 0, 'Horror': 0, 'Romance': 0, 'Sci-Fi': 0, 'Thriller': 0}
 
         # done: find better way to write above
         for item in self.data["Genre"]:
-            for genre in Genres:
+            for genre in self.Genres:
                 if item == genre:
-                    Genres[item] += 1
+                    self.Genres[item] += 1
 
         #makes a panda series, think of it as a dict but better
-        return pandas.Series(Genres, index=Genres)
+        return pandas.Series(self.Genres, index=self.Genres)
 
 
     def genreaverage(self):
