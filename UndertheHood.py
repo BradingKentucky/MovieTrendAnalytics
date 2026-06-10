@@ -12,6 +12,24 @@ class UnderTheHood:
         self.data = data
         self.Genres = Genres
 
+    def getdata(self):
+        return self.data
+
+    def getgenres(self):
+        return self.Genres
+
+    def budgetcleanup(self):
+        masked = ((self.data["BudgetUSD"] <=0) & (self.data["Global_BoxOfficeUSD"] <= 0))
+        print("Before:", len(self.data))
+        print("To remove:", masked.sum())
+        print("Remaining:", (~masked).sum())
+        self.data = self.data[~masked].reset_index(drop=True)
+
+    def genrecleanup(self):
+        # splits the multiple genres in each movie into an array each
+        # the str[0] makes it where only the first value is kept
+        self.data["Genre"] = self.data["Genre"].str.split(",").str[0]
+
     def genretotalcounter(self):
 
         # done: find better way to write above

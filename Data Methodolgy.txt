@@ -15,3 +15,6 @@ results:
 
     Ok so pretty dissapointing results. People have always been intrested in making those genres by their respective % points. But now lets see what the consumer wanted to see amd how that changed over the years.
     About the same.
+
+TMDB
+    since TMDB allows movies to have multiple genres, I have decided to only include the first genre listed for each movie

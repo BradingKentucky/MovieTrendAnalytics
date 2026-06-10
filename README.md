@@ -57,3 +57,6 @@ If you are using, be sure to extract the dataset from the zip file. then run mai
    Gonna use a Go file for the API since it is the fastest and I need speed for this. Esepcailly considering the amount of data. Will only use the API once, but the genre i still would like to directly plug intp python as best as i can
 ### 6/09/26
    TMDB doesn't have documenation for extracting just budget but am working through it
+### 6/09/26
+   TMDB dataset intergeated mostly. Alot of the data I gathered lacks budget and boxoffice, however the small portion that does is sufficent
+   

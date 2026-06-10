@@ -13,26 +13,28 @@ from pandas.core.computation.common import result_type_many
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press F9 to toggle the breakpoint.
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     import pandas, UndertheHood, matplotlib.pyplot as plt, subprocess as tmdb, json
 
 #following genres in the base dataset: Action, Comedy, Documentary, Drama, Horror, Romance, Sci-Fi, Thriller
 # in the tmdb, it is different. subproccess allows me to access that, self-explanatory
-    GOoutput = tmdb.run(['go', 'run', 'TMDB_API.go'], capture_output=True, text=True,shell=True)
+    #GOoutput = tmdb.run(['go', 'run', 'TMDB_API.go'], capture_output=True, text=True,shell=True)
     # loads the outputted json string into Genres dict
-    Genres = json.loads(GOoutput.stdout)
+    #Genres = json.loads(GOoutput.stdout)
     # turns dict into list, every name (action) in the genres (whole dict) output
-    Genres=[Genre['name'] for Genre in Genres['genres']]
+    #Genres=[Genre['name'] for Genre in Genres['genres']]
     #print(Genres)
+    Genres = {"Action":0, "Adventure":0, "Animation":0, "Comedy":0, "Crime":0, "Documentary":0, "Drama":0, "Family":0, "Fantasy":0, "History":0, "Horror":0, "Music":0, "Mystery":0, "Romance":0, "Science Fiction":0, "TV Movie":0, "Thriller":0, "War":0, "Western":0}
+
 # prints data
-    newfile = pandas.read_csv("movies_dataset.csv")
+    bigtestset = "movies_dataset.csv"
+    TMDBtestdataset = "TMDB_movies.csv"
+    newfile = pandas.read_csv(TMDBtestdataset)
     Testdata = UndertheHood.UnderTheHood(newfile,Genres)
+    Testdata.budgetcleanup()
+    Testdata.genrecleanup()
+    print(len(Testdata.data))
    # Testdata = UndertheHood.UnderTheHood("movies_Dataset.csv")
 
 
@@ -102,7 +104,7 @@ if __name__ == '__main__':
             print(f"9: view what was proffitable over the years for films under $5mill, only counting films that made 2.5* their budget")
             print(f"10: view generes from 1950-2026 that made X times their budget")
             print(f"0: Exit")
-            input(choice)
+            choice = input("?")
             if choice == "1":
                 print("total genre count")
                 GenreDict = Testdata.genretotalcounter()
@@ -198,12 +200,12 @@ if __name__ == '__main__':
                 print(f"working on it...")
                 decades = [(1950,1959),(1960,1969),(1970,1979),(1980,1989),(1990,1999),(2000,2009),(2010,2019),(2020,2029)]
                 for start,end in decades:
-                    decade_data = UndertheHood.UnderTheHood(Testdata.sortbyyears(int(start),int(end)))
+                    decade_data = UndertheHood.UnderTheHood(Testdata.sortbyyears(int(start),int(end)),Genres)
                     count =decade_data.sortbyearnings(int(reqment))
                     if len(count) == 0:
                         print(f"no movie in this decade matches parameter, going to next decade")
                     else:
-                        decade_data = UndertheHood.UnderTheHood(count)
+                        decade_data = UndertheHood.UnderTheHood(count, Genres)
                         pie_data = pandas.Series(decade_data.genreaverage())
                         pie_data.plot(kind='pie',autopct='%1.1f%%')
                         plt.title(f"% of movies in genres that made {reqment}* their budget, from {start}-{end}")

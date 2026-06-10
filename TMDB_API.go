@@ -13,7 +13,7 @@ func main() {
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("accept", "application/json")
-	req.Header.Add("Authorization", "insert")
+	req.Header.Add("Authorization", "API Key")
 
 	res, _ := http.DefaultClient.Do(req)
 

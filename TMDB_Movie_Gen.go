@@ -10,10 +10,11 @@ import (
 )
 
 func main() {
-apiKey := "b0b730e199f1d14cdca6f3ff6d22c4e3"
+apiKey := "API KEY"
+movietotal := 10000000 //OG data set was 10,000,000
 
 	// Create CSV file
-    file, err := os.Create("TMDB_movies.csv")
+    file, err := os.Create("TMDB_movies2.csv")
 	if err != nil {
     	panic(err)
 	}
@@ -23,9 +24,9 @@ apiKey := "b0b730e199f1d14cdca6f3ff6d22c4e3"
     defer writer.Flush()
     
     // Write header
-    writer.Write([]string{"Year", "Budget", "Revenue", "Genres"})
+    writer.Write([]string{"ReleaseYear", "BudgetUSD", "Global_BoxOfficeUSD", "Genre"})
 	// Loop through movie IDs
-    for movieID := 1; movieID <= 5; movieID++ {
+    for movieID := 8300; movieID <= movietotal; movieID++ {
         url := fmt.Sprintf("https://api.themoviedb.org/3/movie/%d?api_key=%s", movieID, apiKey)
         
         resp, err := http.Get(url)
@@ -47,6 +48,9 @@ apiKey := "b0b730e199f1d14cdca6f3ff6d22c4e3"
     budget := fmt.Sprintf("%.0f", data["budget"].(float64))
     revenue := fmt.Sprintf("%.0f", data["revenue"].(float64))
     release_date := data["release_date"].(string)
+	if len(release_date) < 4 {
+    continue
+	}
 	year := release_date[:4] // Get year only
     
     // Extract genres
@@ -65,5 +69,9 @@ apiKey := "b0b730e199f1d14cdca6f3ff6d22c4e3"
         writer.Write([]string{year, budget, revenue, genres})
         
         fmt.Printf("Added: %s\n", movieID)
+		if movieID%1000 == 0 {
+        writer.Flush()
+        fmt.Println("Flushed/Progressed saved at:")
+    }
 }
 }
