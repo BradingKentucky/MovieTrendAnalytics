@@ -30,7 +30,8 @@ if __name__ == '__main__':
 # prints data
     bigtestset = "movies_dataset.csv"
     TMDBtestdataset = "TMDB_movies.csv"
-    newfile = pandas.read_csv(TMDBtestdataset)
+    TMDD_Dataset = "TMDB_movies2.csv"
+    newfile = pandas.read_csv(TMDD_Dataset)
     Testdata = UndertheHood.UnderTheHood(newfile,Genres)
     Testdata.budgetcleanup()
     Testdata.genrecleanup()
@@ -58,7 +59,7 @@ if __name__ == '__main__':
             end = start + 9
             key = f"data{i}"  # creates data0..data8
             films = Testdata.sortbyyearsandmoney(start, end, threshold, BeloworNah)
-            ut = UndertheHood.UnderTheHood(films)
+            ut = UndertheHood.UnderTheHood(films,Genres)
             # genreaverage()return Series compatible)
             processed[f"data{i}"] = pandas.Series(ut.genreaverage())
 
@@ -103,6 +104,7 @@ if __name__ == '__main__':
             print(f"8: view genre trends for films under a certain budget over 80 years (1950-2020)")
             print(f"9: view what was proffitable over the years for films under $5mill, only counting films that made 2.5* their budget")
             print(f"10: view generes from 1950-2026 that made X times their budget")
+            print(f"11: view how many movies, given a certain budget, made X times their budget from 1950-2029")
             print(f"0: Exit")
             choice = input("?")
             if choice == "1":
@@ -117,42 +119,34 @@ if __name__ == '__main__':
                 print(f"all films with budget less than {years}")
                 print(Testdata.sortbylessthan(int(years)))
             elif choice == "4":
-                print(f"Action:1, Comedy:2, Documentary:3, Drama:4, Horror:5, Romance:6")
+                i=0
+                for item in Genres:
+                    i=i+1
+                    print(f" {item} : {i}")
                 choice2 = input("genre choice?")
                 valid = True
                 while valid:
-                    if choice2 == "1":
-                        genre = "Action"
-                        valid = False
-                    elif choice2 == "2":
-                        genre = "Comedy"
-                        valid = False
-                    elif choice2 == "3":
-                        genre = "Documentary"
-                        valid = False
-                    elif choice2 == "4":
-                        genre = "Drama"
-                        valid = False
-                    elif choice2 == "5":
-                        genre = "Horror"
-                        valid = False
-                    elif choice2 == "6":
-                        genre ="Romance"
-                        valid = False
+                    i=0
+                    for item in Genres:
+                        i=i+1
+                        if int(choice2) ==i:
+                            genre = item
+                            valid = False
+                            break
                     else:
                         choice2 = input("choose valid genre")
 
                 budget = input("budget")
 
-                print(f"All comedy films made with less than ${budget}")
+                print(f"All {genre} films made with less than ${budget}")
                 catalog1=Testdata.sortbylessthanandgenre(int(budget),genre)
                 print(catalog1)
-                print("Compared to total comedy movies...")
+                print(f"Compared to total {genre} movies...")
                 collection3 = Testdata.genretotalcounter()
                 # convert the series into a dict, then get the %
                 newdict = collection3.to_dict()
-                percent1 = len(catalog1)/newdict["Comedy"]
-                print(f"there is a total of {newdict["Comedy"]} Comedies. Meaning out of all of them, only {percent1} were made with a budget of less than 1,500,000")
+                percent1 = len(catalog1)/newdict[genre]
+                print(f"there is a total of {newdict[genre]} {genre}s. Meaning out of all of them, only {percent1} were made with a budget of less than {budget}")
             elif choice == "5":
                 startyear =int(input("start year?"))
                 endyear = int(input("end year?"))
@@ -185,10 +179,9 @@ if __name__ == '__main__':
             elif choice=="8":
                 thing(5_000_000,True)
                 thing(5_000_000,False)
-                leave = False #remove once done with dev
             elif choice=="9":
                 print("Working on it...")
-                mostpopgenres2 = UndertheHood.UnderTheHood(Testdata.sortbyearnings(2.5))
+                mostpopgenres2 = UndertheHood.UnderTheHood(Testdata.sortbyearnings(2.5),Genres)
                 mostpopgenres3 = pandas.Series(mostpopgenres2.genreaverage())
                 mostpopgenres3.plot(kind='pie',autopct='%1.1f%%')
                 plt.title(f"most popular genres ever, by share that made 2.5* their budget")
@@ -212,22 +205,30 @@ if __name__ == '__main__':
                         plt.show()
 
             elif choice=="11":
-                budget = int(input("below what budget?"))
+                budget = int(input("below/above what budget?"))
                 reqment = input("how much money earned?")
                 print(f"working on it...")
                 decades = [(1950, 1959), (1960, 1969), (1970, 1979), (1980, 1989), (1990, 1999), (2000, 2009),
                            (2010, 2019), (2020, 2029)]
                 for start, end in decades:
-                    decade_data = UndertheHood.UnderTheHood(Testdata.sortbyyearsandmoney(int(start), int(end),budget,True))
-                    count = decade_data.sortbyearnings(int(reqment))
-                    if len(count) == 0:
-                        print(f"no movie in this decade matches parameter, going to next decade")
-                    else:
-                        decade_data = UndertheHood.UnderTheHood(count)
-                        pie_data = pandas.Series(decade_data.genreaverage())
-                        pie_data.plot(kind='pie', autopct='%1.1f%%')
-                        plt.title(f"% of movies made under {budget} in genres that made {reqment}* their budget, from {start}-{end}")
-                        plt.show()
+                    for i in range(3):
+                        belowornah = True
+                        if i == 2:
+                            belowornah = False
+                        decade_data = UndertheHood.UnderTheHood(Testdata.sortbyyearsandmoney(int(start), int(end),budget,belowornah), Genres)
+                        count = decade_data.sortbyearnings(int(reqment))
+                        if len(count) == 0:
+                            print(f"no movie in this decade matches parameter, going to next decade")
+                        else:
+                            decade_data = UndertheHood.UnderTheHood(count, Genres)
+                            pie_data = pandas.Series(decade_data.genreaverage())
+                            pie_data.plot(kind='pie', autopct='%1.1f%%')
+                            if belowornah:
+                                plt.title(f"% of movies made under {budget} in genres that made {reqment}* their budget, from {start}-{end}")
+                                plt.show()
+                            if belowornah is False:
+                                plt.title(f"% of movies made above {budget} in genres that made {reqment}* their budget, from {start}-{end}")
+                                plt.show()
 
             elif choice == "0":
                 leave = False

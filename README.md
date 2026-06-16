@@ -59,4 +59,5 @@ If you are using, be sure to extract the dataset from the zip file. then run mai
    TMDB doesn't have documenation for extracting just budget but am working through it
 ### 6/09/26
    TMDB dataset intergeated mostly. Alot of the data I gathered lacks budget and boxoffice, however the small portion that does is sufficent
-   
+### 6/15/26
+    I have begun the data anaylis of all the data. Will have to write code to see proffitablity of genres too however

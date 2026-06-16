@@ -18,3 +18,33 @@ results:
 
 TMDB
     since TMDB allows movies to have multiple genres, I have decided to only include the first genre listed for each movie
+    Found some intresting results for films below 5,000,000 vs above 5,000,000. I decided to change my mind about the small and mid-sized indie films as most films below 1,000,000 are at art house and film festivals, which is alot more diffuclt to find information on online in a format that allows it to be intertped like I have done
+Also for a film to be profitable, I have deemed it where it needs to make 3 times their budget.
+        Results
+            Summary
+		Looking at the Genre_Share.pngs we can see some simialriates. Drama and Comdies are both very popular genres for people to produce, followed up by Action and Horror.
+
+There are some differnces however when we get past the big four. For films made with budgets higher than 5,000,000 there is alot more constiency. Genres that were popualry made in the 1950s stayed that way. This led to there always being more thrillers made with budgets above 5,000,000 when compared to under
+For films made with less than 5,000,000 there was considerable change. With Action films seeing moderate increase from the 1960s before stabilizing in the 2000s. This is true for most genres as well. Docuemntaries took off in the 1990s, while Westerns started their decline in the 1960s in exchange for Action films. Adventure films were also popular between the 1950s and 1960s before becoming one of the lease produced genres.
+
+	Detailed profitability chart, by decades
+1950s
+	Audiences wanted about the same, no noticeable differnces
+1960s
+	Same as before, although audences for non-indie films had a 2% higher profitablity in Comedy films
+1970s
+	About same as before. Action films 2% more profitable for big films. 
+1980s
+	Drama Films are 2% more profitable for small budget,
+1990s
+	No major differnces
+2000s
+	No extreme differences.
+2010s
+	No major differnces
+2020s
+	decade not even done yet, however also no major differnces
+
+Conclusion
+	Overall, the profitably of genres have all been around the same since the 1990s. With before only having max differences of 2%. However, the kinds of movies that were being produced have changed over the years if you ignore the "big four." With the most noticeable being way documentaries in the 90s for small budgets being produced, and thrillers being a staple constiency for big budgets to produce. These results show that there is indeed a difference in creative minds between those who work with big-budget and those who work with small-budget. However, at least since the 1990s, audiences consume both just the same.
+	
